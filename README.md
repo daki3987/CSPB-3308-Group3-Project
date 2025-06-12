@@ -10,9 +10,9 @@
 ##  Team Members
 **Group3 : The programmers**
 
-- **Chinmay Somayajula** – Scrum Master
-- **Patricia Varela** – Frontend Developer
-- **Dain Kim** – Frontend Developer
+- **Chinmay Somayajula** – 
+- **Patricia Varela** – 
+- **Dain Kim** – 
 
 ---
 
