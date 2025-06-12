@@ -8,6 +8,7 @@
 ---
 
 ##  Team Members
+**Group3 : The programmers**
 
 - **Chinmay Somayajula** – Scrum Master
 - **Patricia Varela** – Frontend Developer
