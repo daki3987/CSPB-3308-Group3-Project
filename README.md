@@ -1,11 +1,14 @@
 # CSPB-3308-Group3-Project
 
 ##  Team Members
-**Group 3 Name: The programmers**
 
-- **Chinmay Somayajula** chinmay.somayajula@colorado.edu
-- **Patricia Varela** patricia.varela@colorado.edu
-- **Dain Kim** dain.kim@colorado.edu
+=======
+**Group 3 Name: The Programmers**
+
+- **Chinmay Somayajula** (s-chinmay) chinmay.somayajula@colorado.edu
+- **Patricia Varela** (pbvarela47) patricia.varela@colorado.edu
+- **Dain Kim** (daki3987) dain.kim@colorado.edu
+
 
 ---
 ## Meeting time 
@@ -22,6 +25,11 @@ By providing a platform that is both accessible and engaging, we aim to inspire 
 
 While we start to work each other, we just reliazed that all of use from different cultural background and timezone.
 Despite our diverse cultural backgrounds, we believe that food serves as a universal language. By creating **Recipe Handbook**, we aim to share and celebrate our unique culinary traditions, fostering understanding and connection among people worldwide.
+
+=======
+While we start to work with each other, we realize that all of us are from different cultural backgrounds and timezones.
+Despite our diverse cultural backgrounds, we believe that food serves as a universal language. By creating **Recipe Handbook**, we aim to share and celebrate our unique culinary traditions, fostering understanding and connection among people worldwide.
+
 
 
 ## Technologies Used
