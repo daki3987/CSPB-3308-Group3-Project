@@ -26,11 +26,9 @@ Each week’s progress and activities will be logged here for reference and grad
 
 ## Week 3
 
-- *(To be updated during Week 3)*
-
-- Reviewed and finalized the recipe page layout.
-- Added navigation functionality, including integration of a global map for recipe origins.
-- Inserted images into the layout for visual content enhancement.
-- Collected and imported external sources for recipes and corresponding images.
+- Review and finalize the recipe page layout.
+- Insert a global map of recipe origins into the page to build up search functionality
+- Insert images or icons into the layout to enhance the visual content.
+- Begin collecting external sources for recipes and their images.
 
 ---
