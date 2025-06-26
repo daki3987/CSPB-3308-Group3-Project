@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    
+    <style>
+        /* map container attributes: size, font style */
+        #map { 
+            height: 500px; 
+            width: 100%;
+            margin: 20px 0;
+            background: white;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* hides built in map controls */
+        .leaflet-control-container { display: none; }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+    <script>
+        // initialize fixed map
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            zoomControl: false,
+            dragging: false,
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false,
+            tap: false,
+            attributionControl: false
+        });
+
+        // style for landmasses
+        // NEED TO MODIFY WHEN SEPARATE CONTINENT RECOGNITION WORKS!!!
+        const landStyle = {
+            fillColor: '#fbb4ae',
+            weight: 1,
+            opacity: 1,
+            color: '#ffffff',
+            fillOpacity: 0.8
+        };
+
+        // track if mouse is over land for clickability feature
+        let isOverLand = false;
+
+        // load existing GeoJSON data
+        // NEED TO FIND ONE WITH CONTINENTAL DATA!!!
+        fetch('https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_land.geojson')
+            .then(response => response.json())
+            .then(data => {
+                
+                // add GeoJSON layer to track land vs water
+                const landLayer = L.geoJSON(data, {
+                    style: landStyle,
+                    onEachFeature: (feature, layer) => {
+                        
+                        // mouseover event; adds border to highlight selected landmass
+                        layer.on('mouseover', function(e) {
+                            isOverLand = true;
+                            this.setStyle({
+                                weight: 2,
+                                color: '#555',
+                                fillOpacity: 0.9
+                            });
+                        });
+                        
+                        // mouseout event
+                        layer.on('mouseout', function(e) {
+                            isOverLand = false;
+                            this.setStyle(landStyle);
+                        });
+                    }
+                }).addTo(map);
+
+                // map click func to open new page
+                // NEED TO TROUBLESHOOT REDIRECTION!!!
+                map.on('click', function(e) {
+                    
+                    // check if click was on land
+                    if (isOverLand) {
+                        window.location.href = 'continent_map.html';
+                    }
+                });
+
+                // fit bounds
+                map.fitBounds(landLayer.getBounds());
+            })
+            .catch(error => {
+                console.error('Error loading GeoJSON:', error);
+                
+                // fallback rectangle
+                const world = L.rectangle([[-90, -180], [90, 180]], {
+                    fillColor: '#fbb4ae',
+                    fillOpacity: 0.8,
+                    weight: 1,
+                    color: '#ffffff'
+                }).on('click', function() {
+                    window.location.href = 'continent_map.html';
+                }).addTo(map);
+            });
+    </script>
+</body>
+
+</html>
