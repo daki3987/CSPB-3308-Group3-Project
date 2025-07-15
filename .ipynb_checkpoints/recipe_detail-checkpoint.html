@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Detail - Taste Together</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      background-color: #fff4f1;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background-color: #fff4f1;
+      padding: 20px;
+      border-bottom: 2px solid #ffccbc;
+    }
+    .title {
+      font-size: 32px;
+      background: linear-gradient(to right, #ff4500, #ff7f50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      margin: 0;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #f8f8f8;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    .sidebar h3 {
+      font-size: 20px;
+      color: #d9480f;
+      margin-bottom: 10px;
+    }
+    .sidebar a {
+      display: block;
+      font-size: 16px;
+      color: #d9480f;
+      text-decoration: none;
+      margin: 8px 0;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar a:hover {
+      color: #ff7f50;
+    }
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .recipe-title {
+      font-size: 28px;
+      color: #d9480f;
+      margin-bottom: 10px;
+    }
+    .recipe-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .section-title {
+      font-size: 22px;
+      color: #ff4500;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+    .description, ul, ol {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+    ul, ol {
+      padding-left: 20px;
+    }
+    .tags {
+      margin-top: 40px;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #888;
+    }
+    .tag {
+      background-color: #ffe5d9;
+      color: #d9480f;
+      padding: 4px 10px;
+      margin-right: 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* Review & Comment Styles */
+    #comment-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      border: 1px solid #ffccbc;
+      border-radius: 6px;
+      resize: vertical;
+      background-color: #fff9f7;
+    }
+    #comment-form button {
+      background-color: #ff7f50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .comment-box {
+      border: 1px solid #ffccbc;
+      background-color: #fff9f7;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .stars {
+      cursor: pointer;
+      font-size: 20px;
+      color: #ffc107;
+      margin-bottom: 10px;
+    }
+    .stars span:hover,
+    .stars span.active {
+      color: #ff9800;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Taste Together</div>
+  </div>
+
+  <div class="content">
+    <div class="sidebar">
+      <h3>Recipe List</h3>
+      <a href="#">Spaghetti Carbonara</a>
+      <a href="#">Tacos al Pastor</a>
+      <a href="#">Beef Bulgogi</a>
+      <a href="#">Butter Chicken</a>
+      <a href="#">Pho</a>
+      <a href="#">Paella</a>
+      <a href="#">Poutine</a>
+    </div>
+
+    <div class="main">
+      <div class="recipe-title">Spaghetti Carbonara</div>
+      <img src="https://via.placeholder.com/800x400" alt="Spaghetti Carbonara" class="recipe-image" />
+
+      <p class="description">
+        A creamy and delicious Italian pasta dish made with eggs, pancetta, and cheese. Simple ingredients, big flavor.
+      </p>
+
+      <div class="section-title">Ingredients</div>
+      <ul>
+        <li>200g spaghetti</li>
+        <li>2 large eggs</li>
+        <li>100g pancetta</li>
+        <li>50g grated parmesan cheese</li>
+        <li>Fresh ground black pepper</li>
+      </ul>
+
+      <div class="section-title">Instructions</div>
+      <ol>
+        <li>Boil pasta in salted water until al dente.</li>
+        <li>Cook pancetta in a pan until crispy.</li>
+        <li>Whisk eggs and cheese together in a bowl.</li>
+        <li>Drain pasta and immediately mix with pancetta and egg-cheese mix.</li>
+        <li>Stir well, season with pepper, and serve hot.</li>
+      </ol>
+
+      <div class="tags">
+        <span class="tag">Italian</span>
+        <span class="tag">Pasta</span>
+        <span class="tag">Quick</span>
+      </div>
+
+      <div class="section-title">Comments & Reviews</div>
+      <div id="comment-form">
+        <div class="stars" id="star-rating">
+          <span onclick="setRating(1)">☆</span>
+          <span onclick="setRating(2)">☆</span>
+          <span onclick="setRating(3)">☆</span>
+          <span onclick="setRating(4)">☆</span>
+          <span onclick="setRating(5)">☆</span>
+        </div>
+        <textarea id="comment-input" placeholder="Write your comment or review..." rows="4"></textarea>
+        <button onclick="addComment()">Submit</button>
+      </div>
+
+      <div id="comments-section">
+        <!-- Comments will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRating = 0;
+
+    function setRating(rating) {
+      currentRating = rating;
+      const stars = document.querySelectorAll('#star-rating span');
+      stars.forEach((star, i) => {
+        star.textContent = i < rating ? '★' : '☆';
+        star.classList.toggle('active', i < rating);
+      });
+    }
+
+    function addComment() {
+      const input = document.getElementById('comment-input');
+      const value = input.value.trim();
+      if (!value || currentRating === 0) return;
+
+      const commentBox = document.createElement('div');
+      commentBox.className = 'comment-box';
+
+      const starDisplay = '★'.repeat(currentRating) + '☆'.repeat(5 - currentRating);
+      commentBox.innerHTML = `<div style="color:#ff9800; font-size:16px; margin-bottom:5px;">${starDisplay}</div><div>${value}</div>`;
+
+      document.getElementById('comments-section').prepend(commentBox);
+      input.value = '';
+      setRating(0); // reset
+    }
+  </script>
+</body>
+</html>

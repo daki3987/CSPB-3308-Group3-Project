@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taste Together</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 20px;
+      background-color: #fff4f1;
+      color: #ff4500;
+    }
+
+    .title {
+      font-size: 28px;
+      color: #ff4500;
+      background: linear-gradient(to right, #ff4500, #ff7f50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .authors {
+      font-size: 14px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f8f8f8;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .continent-button {
+      display: block;
+      background-color: #ffe5d9;
+      color: #d9480f;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+      padding: 12px;
+      text-align: left;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .continent-button:hover {
+      background-color: #ffccbc;
+    }
+
+    .main {
+      flex: 1;
+      background-color: #fff4f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Taste Together</div>
+    <div class="authors">By Chinmay, Dain, Patricia</div>
+  </div>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Continents</h2>
+      <button class="continent-button">North America</button>
+      <button class="continent-button">South America</button>
+      <button class="continent-button">Europe</button>
+      <button class="continent-button">Asia</button>
+      <button class="continent-button">Antarctica</button>
+      <button class="continent-button">Australia</button>
+      <button class="continent-button">Africa</button>
+    </div>
+
+    <div class="main">
+      map
+    </div>
+  </div>
+</body>
+</html>
