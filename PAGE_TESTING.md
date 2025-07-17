@@ -28,10 +28,10 @@ The homepage displays an interactive world map with pins representing different 
 
 ---
 
-## 2. Page Title: Regional Recipes Listing (`window.html`)
+## 2. Regional Listing (window.html)
 
 ### Description
-This page shows a list of fun facts filtered by the clicked region (passed via URL). Recipes appear as cards and can be searched, filtered, and sorted.
+This page shows a list of fun facts filtered by the clicked region (passed via URL). Users can search, filter, or sort these cards.
 
 ### Parameters
 - `continent`: required, e.g., `"Asia"`
