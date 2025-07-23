@@ -1,10 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taste Together</title>
+  <title>Tap the Globe</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
   <style>
     body {
       margin: 0;
@@ -47,7 +50,7 @@
       width: 250px;
       background-color: #f8f8f8;
       padding: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .continent-button {
@@ -71,35 +74,62 @@
 
     .main {
       flex: 1;
-      background-color: #fff4f1;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 36px;
-      color: #aaa;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="title">Taste Together</div>
+    <div class="title">Tap the Globe</div>
     <div class="authors">By Chinmay, Dain, Patricia</div>
   </div>
   <div class="container">
     <div class="sidebar">
       <h2>Continents</h2>
-      <button class="continent-button">North America</button>
-      <button class="continent-button">South America</button>
-      <button class="continent-button">Europe</button>
-      <button class="continent-button">Asia</button>
-      <button class="continent-button">Antarctica</button>
-      <button class="continent-button">Australia</button>
-      <button class="continent-button">Africa</button>
+      <button class="continent-button" onclick="flyToContinent('NA')">North America</button>
+      <button class="continent-button" onclick="flyToContinent('SA')">South America</button>
+      <button class="continent-button" onclick="flyToContinent('EU')">Europe</button>
+      <button class="continent-button" onclick="flyToContinent('AS')">Asia</button>
+      <button class="continent-button" onclick="flyToContinent('AN')">Antarctica</button>
+      <button class="continent-button" onclick="flyToContinent('AU')">Australia</button>
+      <button class="continent-button" onclick="flyToContinent('AF')">Africa</button>
     </div>
 
     <div class="main">
-      map
+      <div id="map"></div>
     </div>
   </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map
+    const map = L.map('map').setView([20, 0], 2);
+
+    // Add the tile layer (the actual map tiles)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Continent fly-to function
+    function flyToContinent(code) {
+      const locations = {
+        NA: [40, -100],
+        SA: [-10, -55],
+        EU: [50, 10],
+        AS: [34, 100],
+        AF: [0, 20],
+        AU: [-25, 133],
+        AN: [-75, 0]
+      };
+      map.flyTo(locations[code], 3);
+    }
+  </script>
 </body>
 </html>
