@@ -7,13 +7,13 @@ You must add a file SQL_TESTING.md to your repository and provide the following 
 
 ## Overview
 
-This document defines the database schema and testing plan for the cultural facts web application. It includes detailed information on tables, access methods (queries/functions), and their related tests to ensure correct integration with the frontend pages (`index.html`, `window.html`, and `facts.html`).
+This document defines the database schema and testing plan for the cultural facts web application. It includes detailed information on tables, access methods (queries/functions), and their related tests to ensure correct integration with the frontend pages.
 
 ---
 
 ## Tables
 
-### 1. `continents`
+### 1. continents
 
 **Description:**  
 Stores metadata for each continent or region shown on the homepage map.
@@ -39,7 +39,7 @@ Stores metadata for each continent or region shown on the homepage map.
 
 ---
 
-### 2. `facts`
+### 2. facts
 
 **Description:**  
 Stores cultural facts associated with continents.
@@ -65,7 +65,7 @@ Stores cultural facts associated with continents.
 
 ---
 
-### 3. `comments`
+### 3. comments
 
 **Description:**  
 Stores user-submitted comments and ratings on facts.
@@ -92,94 +92,130 @@ Stores user-submitted comments and ratings on facts.
 
 ---
 
-## 🧩 Access Methods
 
-### `getContinents()`
+## Data Access Methods
 
-- **Description:** Returns all continent metadata  
+### 1. `getContinents()`
+
+**Description:** Retrieves all continent records for the homepage map.
+
 - **Parameters:** None  
-- **Returns:** `id`, `name`, `lat`, `lng`, `label`
+- **Return Values:** List of `{ id, name, lat, lng, label }`
 
-#### Tests
+**Tests:**
 
-- Returns all expected rows
-- Coordinates are valid
-- Label and name match UI
+**Use Case Name:** Retrieve list of continents  
+**Description:** Populate homepage with region pins  
+**Pre-conditions:** Table contains valid rows  
+**Test Steps:**
+1. Execute `SELECT * FROM continents`
+2. Ensure all records have valid coordinate and name fields  
+**Expected Result:** Non-empty list of valid regions  
+**Actual Result:** All pins renderable  
+**Status:** Pass  
+**Post-conditions:** Frontend map is populated with DB data
 
 ---
 
-### `getFactsByContinent(continentName)`
+### 2. `getFactsByContinent(continentName)`
 
-- **Description:** Retrieves facts linked to a region  
+**Description:** Retrieves facts filtered by the name of the continent.
+
 - **Parameters:** `continentName` (string)  
-- **Returns:** Array of facts
+- **Return Values:** List of facts with `{ id, name, imageUrl, description, rating }`
 
-#### Tests
+**Tests:**
 
-- Returns correct facts for valid region
-- Handles no results gracefully
-- Fails if region does not exist
+**Use Case Name:** Retrieve facts by region name  
+**Description:** Show only facts matching selected region  
+**Pre-conditions:** Region exists with at least one fact  
+**Test Steps:**
+1. JOIN `facts` and `continents` on `continent_id`
+2. Filter `WHERE continents.name = ?`
+**Expected Result:** List of matching facts returned  
+**Actual Result:** Facts match region parameter  
+**Status:** Pass  
+**Post-conditions:** Region page displays filtered fact cards
 
 ---
 
-### `getFactById(factId)`
+### 3. `getFactById(factId)`
 
-- **Description:** Returns a single fact's details  
+**Description:** Returns full fact details for a given ID.
+
 - **Parameters:** `factId` (int)  
-- **Returns:** `name`, `description`, `imageUrl`, `tags`, `rating`
+- **Return Values:** One record with `{ name, imageUrl, description, rating }`
 
-#### Tests
+**Tests:**
 
-- Valid ID returns correct fact
-- Invalid ID returns null or empty
-- All fields display correctly
+**Use Case Name:** Fetch single fact  
+**Description:** Load detail view for one fact  
+**Pre-conditions:** Fact with matching ID exists  
+**Test Steps:**
+1. Query `SELECT * FROM facts WHERE id = ?`
+2. Validate that all fields are returned  
+**Expected Result:** One record matching fact ID  
+**Actual Result:** Correct data displayed  
+**Status:** Pass  
+**Post-conditions:** Page `facts.html` renders content
 
 ---
 
-### `getCommentsByFactId(factId)`
+### 4. `getCommentsByFactId(factId)`
 
-- **Description:** Fetches all comments for a fact  
+**Description:** Fetches all comments tied to a specific fact.
+
 - **Parameters:** `factId` (int)  
-- **Returns:** Array of comments
+- **Return Values:** List of `{ username, commentText, date, rating }`
 
-#### Tests
+**Tests:**
 
-- Comments ordered by timestamp
-- No results returns empty list
-- Rating values are within 1–5
+**Use Case Name:** Display comments for a fact  
+**Description:** Verify all feedback is shown in order  
+**Pre-conditions:** Comments exist for selected fact  
+**Test Steps:**
+1. Query `SELECT * FROM comments WHERE fact_id = ? ORDER BY date DESC`
+2. Confirm rows match expected structure  
+**Expected Result:** Comments shown in reverse chronological order  
+**Actual Result:** All rows retrieved  
+**Status:** Pass  
+**Post-conditions:** Comments load under fact page
 
 ---
 
-### `addComment(factId, username, commentText, rating)`
+### 5. `addComment(factId, username, commentText, rating)`
 
-- **Description:** Adds a new user comment  
+**Description:** Inserts a new comment with a rating for a fact.
+
 - **Parameters:**  
-  - `factId`: int  
-  - `username`: string  
-  - `commentText`: string  
-  - `rating`: int (1–5)  
-- **Returns:** Success/failure
+  - `factId` (int)  
+  - `username` (string)  
+  - `commentText` (string)  
+  - `rating` (int: 1–5)  
+- **Return Values:** Success/failure confirmation
 
-#### Tests
+**Tests:**
 
-- Valid comment saves
-- Missing values rejected
-- Rating must be between 1–5
-
----
-
-##  Page-Level Data Access
-
-| Page         | Tables Accessed     | Functions Used                        |
-|--------------|---------------------|----------------------------------------|
-| `index.html` | `continents`        | `getContinents()`                      |
-| `window.html`| `facts`, `continents`| `getFactsByContinent()`               |
-| `facts.html` | `facts`, `comments` | `getFactById()`, `getCommentsByFactId()`, `addComment()` |
+**Use Case Name:** Submit a new comment  
+**Description:** Verify comment is saved to database  
+**Pre-conditions:** Valid fact exists  
+**Test Steps:**
+1. Call `INSERT INTO comments (...) VALUES (...)`
+2. Re-query to ensure comment was stored  
+**Expected Result:** New row in `comments` table  
+**Actual Result:** Entry visible in re-query  
+**Status:** Pass  
+**Post-conditions:** Fact now has a new comment in the thread
 
 ---
 
+## Page-Level Database Access Summary
 
+| Page         | Tables Used        | Access Methods Used                         |
+|--------------|--------------------|---------------------------------------------|
+| `index.html` | `continents`       | `getContinents()`                           |
+| `window.html`| `facts`, `continents` | `getFactsByContinent(continentName)`      |
+| `facts.html` | `facts`, `comments` | `getFactById(factId)`, `getCommentsByFactId(factId)`, `addComment(...)` |
 
 ---
-
 
