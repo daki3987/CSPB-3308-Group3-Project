@@ -6,7 +6,6 @@
 **Group 3 Name: The Programmers**
 
 - **Chinmay Somayajula** (s-chinmay) chinmay.somayajula@colorado.edu
-- **Patricia Varela** (pbvarela47) patricia.varela@colorado.edu
 - **Dain Kim** (daki3987) dain.kim@colorado.edu
 
 
@@ -16,20 +15,13 @@
 
 
 
-# Recipe Handbook – Online Recipe Website
+# Tap the globe
 
-**Recipe Handbook** is a collaborative project aimed at creating a user-friendly online platform for discovering, sharing, and organizing recipes. Built with HTML and CSS, the website offers a clean and responsive design for an optimal user experience. Users can easily explore recipes from around the world, discovering new flavors and culinary traditions.
-By providing a platform that is both accessible and engaging, we aim to inspire individuals to explore new cuisines, enhance their cooking skills, and share their culinary creations with others.
+**Tap the globe** is an interactive web application featuring a world map with clickable pins representing continents or cultural regions. Users can explore fascinating true and false cultural facts about each continent by tapping on map pins or selecting continents from the sidebar.The project aims to celebrate cultural diversity by providing an engaging, educational experience through visually appealing maps and bite-sized fact cards.
 
 # Motivation
 
-While we start to work each other, we just reliazed that all of use from different cultural background and timezone.
-Despite our diverse cultural backgrounds, we believe that food serves as a universal language. By creating **Recipe Handbook**, we aim to share and celebrate our unique culinary traditions, fostering understanding and connection among people worldwide.
-
-=======
-While we start to work with each other, we realize that all of us are from different cultural backgrounds and timezones.
-Despite our diverse cultural backgrounds, we believe that food serves as a universal language. By creating **Recipe Handbook**, we aim to share and celebrate our unique culinary traditions, fostering understanding and connection among people worldwide.
-
+Our team comes from different cultural backgrounds and time zones. We share a common belief that exploring and sharing culture fosters global understanding. Tap the Globe aims to bring people together through interactive learning about the world’s diverse cultures.
 
 
 ## Technologies Used
@@ -45,16 +37,15 @@ Despite our diverse cultural backgrounds, we believe that food serves as a unive
   
 ```
 .  
-├── recipe-world 
-|   ├── index.html 
-|   |   ├── recipes.html   # lising pages for recipes  
-|   |   |   ├── recipe detail.html   
-|   |   |         . . .  
-|   ├── css  
-|   |   ├── style.css # main style sheet
-|   ├── images 
-|   |   ├── recipe1.jpg 
-|   |   ├── recipe2.jpg 
+.
+├── index.html
+│   ├── fact.html           # Detail page showing facts for selected continent
+├── css
+│   └── style.css           # Main stylesheet
+├── images
+│   ├── fact1.jpg
+│   ├── fact2.jpg
+│   └── ...
 . . .     
  
 ```
