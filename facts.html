@@ -2,43 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fact Detail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cultural Facts Explorer</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body, html {
+      margin: 0; padding: 0; font-family: Arial, sans-serif;
+      height: 100vh; display: flex; flex-direction: column;
+    }
+    .header {
+      background: #ff7043; color: white; padding: 15px 20px;
+      font-size: 1.5rem; font-weight: bold;
+    }
+    .content {
+      display: flex; flex: 1; overflow: hidden;
+    }
+    .sidebar {
+      background: #f8f8f8; width: 200px; padding: 15px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      display: flex; flex-direction: column;
+    }
+    .sidebar h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #d9480f;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background-color: #ffccbc;
+      color: #d9480f;
+    }
+    .back-link {
+      margin-top: auto;
+      color: #ff4500;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .main {
+      flex: 1; padding: 20px; overflow-y: auto;
+    }
+    .fact-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 15px;
+    }
+    .fact-header h1 {
+      margin: 0;
+      color: #d9480f;
+    }
+    .rating {
+      font-size: 1.2rem;
+      color: #ff7043;
+    }
+    .fact-image {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .review-section {
+      margin-top: 30px;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    form button {
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    form button:hover {
+      background-color: #e65c33;
+    }
+    .comments-list .comment {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="header">
-    <div class="title">Cultural Facts Explorer</div>
-  </div>
+  <div class="header">Cultural Facts Explorer</div>
 
   <div class="content">
-    <div class="sidebar">
+    <nav class="sidebar" id="sidebar">
       <h3>Continents</h3>
-      <a href="fact.html?continent=Europe" data-continent="Europe">Europe</a>
-      <a href="fact.html?continent=Africa" data-continent="Africa">Africa</a>
-      <a href="fact.html?continent=Asia" data-continent="Asia">Asia</a>
-      <a href="fact.html?continent=Middle%20East" data-continent="Middle East">Middle East</a>
-      <a href="fact.html?continent=Oceania" data-continent="Oceania">Oceania</a>
-      <a href="fact.html?continent=North%20America" data-continent="North America">North America</a>
-      <a href="fact.html?continent=South%20America" data-continent="South America">South America</a>
+      <a href="#" data-continent="Europe">Europe</a>
+      <a href="#" data-continent="Africa">Africa</a>
+      <a href="#" data-continent="Asia">Asia</a>
+      <a href="#" data-continent="Middle East">Middle East</a>
+      <a href="#" data-continent="Oceania">Oceania</a>
+      <a href="#" data-continent="North America">North America</a>
+      <a href="#" data-continent="South America">South America</a>
       <a class="back-link" href="index.html">← Back to Map</a>
-    </div>
+    </nav>
 
-    <div class="main">
+    <main class="main">
       <div class="fact-header">
         <h1 id="fact-title">Cultural Fact</h1>
         <div class="rating" id="fact-rating">★★★★☆ (4.0)</div>
       </div>
 
-      <img id="fact-image" src="images/fact1.jpg" alt="Cultural Image" class="fact-image"/>
+      <img id="fact-image" src="images/fact1.jpg" alt="Cultural Image" class="fact-image" />
 
-      <p id="fact-description">
-        This is a more detailed description of the cultural fact.
-      </p>
+      <p id="fact-description">This is a more detailed description of the cultural fact.</p>
 
-      <hr/>
+      <hr />
 
-      <div class="review-section">
+      <section class="review-section">
         <h2>Reviews & Ratings</h2>
         <form id="comment-form">
           <input type="text" id="username" placeholder="Your name" required />
@@ -60,8 +151,8 @@
         </form>
 
         <div id="comments-list" class="comments-list"></div>
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 
   <script>
@@ -110,37 +201,116 @@
       }
     };
 
-    const params = new URLSearchParams(window.location.search);
-    const continent = params.get("continent") || "Europe";
-
-    const data = factsData[continent];
-
-    document.getElementById("fact-title").textContent = data.title;
-    document.getElementById("fact-image").src = data.image;
-    document.getElementById("fact-description").textContent = data.description;
-    document.getElementById("fact-rating").textContent = data.rating;
-
+    // Elements
+    const factTitle = document.getElementById('fact-title');
+    const factImage = document.getElementById('fact-image');
+    const factDescription = document.getElementById('fact-description');
+    const factRating = document.getElementById('fact-rating');
+    const sidebarLinks = document.querySelectorAll('.sidebar a[data-continent]');
     const form = document.getElementById('comment-form');
     const commentsList = document.getElementById('comments-list');
 
-    form.addEventListener('submit', (e) => {
+    // Get initial continent from URL or default to Europe
+    const params = new URLSearchParams(window.location.search);
+    let continent = params.get("continent") || "Europe";
+
+    // Load comments from localStorage key for the continent
+    function loadComments(cont) {
+      const key = `comments_${cont}`;
+      const saved = localStorage.getItem(key);
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    // Save comments to localStorage key for the continent
+    function saveComments(cont, comments) {
+      const key = `comments_${cont}`;
+      localStorage.setItem(key, JSON.stringify(comments));
+    }
+
+    // Render comments list
+    function renderComments(cont) {
+      const comments = loadComments(cont);
+      commentsList.innerHTML = '';
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<p>No reviews yet. Be the first!</p>';
+        return;
+      }
+      comments.forEach(({ username, text, rating }) => {
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
+          <strong>${username}</strong> (${'★'.repeat(rating)}${'☆'.repeat(5 - rating)})<br/>
+          <p>${text}</p>
+          <hr/>
+        `;
+        commentsList.appendChild(commentElement);
+      });
+    }
+
+    // Update the fact detail content based on selected continent
+    function updateContent(cont) {
+      const data = factsData[cont];
+      if (!data) return;
+
+      factTitle.textContent = data.title;
+      factImage.src = data.image;
+      factImage.alt = data.title;
+      factDescription.textContent = data.description;
+      factRating.textContent = data.rating;
+
+      // Update active sidebar link
+      sidebarLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.continent === cont);
+      });
+
+      // Render comments for selected continent
+      renderComments(cont);
+
+      // Reset form
+      form.reset();
+    }
+
+    // Initialize page
+    updateContent(continent);
+
+    // Sidebar click handler (without page reload)
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const selected = link.dataset.continent;
+        if (selected === continent) return;
+
+        continent = selected;
+        history.pushState(null, '', `facts.html?continent=${encodeURIComponent(continent)}`);
+        updateContent(continent);
+      });
+    });
+
+    // Browser back/forward support
+    window.addEventListener('popstate', () => {
+      const newCont = (new URLSearchParams(window.location.search)).get('continent') || "Europe";
+      if (newCont !== continent) {
+        continent = newCont;
+        updateContent(continent);
+      }
+    });
+
+    // Form submit handler to save comment + rating
+    form.addEventListener('submit', e => {
       e.preventDefault();
 
-      const username = document.getElementById('username').value;
-      const text = document.getElementById('commentText').value;
-      const rating = document.getElementById('rating').value;
+      const username = document.getElementById('username').value.trim();
+      const text = document.getElementById('commentText').value.trim();
+      const ratingValue = document.getElementById('rating').value;
+      const rating = parseInt(ratingValue, 10);
 
-      const commentElement = document.createElement('div');
-      commentElement.className = 'comment';
+      if (!username || !text || !rating) return;
 
-      commentElement.innerHTML = `
-        <strong>${username}</strong> (${rating}★)<br/>
-        <p>${text}</p>
-        <hr/>
-      `;
+      const comments = loadComments(continent);
+      comments.unshift({ username, text, rating });
+      saveComments(continent, comments);
 
-      commentsList.prepend(commentElement);
-
+      renderComments(continent);
       form.reset();
     });
   </script>
