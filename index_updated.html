@@ -24,7 +24,6 @@
 
     .title {
       font-size: 28px;
-      color: #ff4500;
       background: linear-gradient(to right, #ff4500, #ff7f50);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -86,7 +85,7 @@
 <body>
   <div class="header">
     <div class="title">Tap the Globe</div>
-    <div class="authors">By Chinmay, Dain, Patricia</div>
+    <div class="authors">By Chinmay, Dain</div>
   </div>
   <div class="container">
     <div class="sidebar">
@@ -107,15 +106,15 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Initialize the map
+    // Initialize map
     const map = L.map('map').setView([20, 0], 2);
 
-    // Add the tile layer
+    // Add tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Define locations for flyTo
+    // Define continent fly locations
     const continentLocations = {
       'North America': [40, -100],
       'South America': [-10, -55],
@@ -126,18 +125,67 @@
       'Antarctica': [-75, 0]
     };
 
+    // Define fact pins by country (tied to facts)
+    const factPins = [
+      {
+        country: 'Belgium',
+        coords: [50.8503, 4.3517],
+        fact: 'French fries were invented in Belgium',
+        continent: 'Europe'
+      },
+      {
+        country: 'South Korea',
+        coords: [37.5665, 126.9780],
+        fact: 'Kimchi fermented underground',
+        continent: 'Asia'
+      },
+      {
+        country: 'Canada',
+        coords: [45.4215, -75.6972],
+        fact: 'Canadians tap maple trees',
+        continent: 'North America'
+      },
+      {
+        country: 'South Africa',
+        coords: [-30.5595, 22.9375],
+        fact: 'Ostrich eggs feed 10 people',
+        continent: 'Africa'
+      },
+      {
+        country: 'New Zealand',
+        coords: [-40.9006, 174.8860],
+        fact: 'Kiwi is a bird',
+        continent: 'Australia'
+      },
+      {
+        country: 'Peru',
+        coords: [-9.19, -75.0152],
+        fact: 'Llamas roam Andean cities',
+        continent: 'South America'
+      },
+      {
+        country: 'Algeria',
+        coords: [28.0339, 1.6596],
+        fact: 'Snow in Sahara',
+        continent: 'Africa'
+      }
+    ];
+
+    // Add markers to map
+    factPins.forEach(pin => {
+      const marker = L.marker(pin.coords).addTo(map);
+      marker.bindPopup(`<b>${pin.country}</b><br>${pin.fact}<br><button onclick="handleContinentClick('${pin.continent}')">More from ${pin.continent}</button>`);
+    });
+
     // Handle continent button click
     function handleContinentClick(continent) {
-      // Fly to the location
       if (continentLocations[continent]) {
         map.flyTo(continentLocations[continent], 3);
       }
-
-      // Open popup window
       openPopup(`window.html?continent=${encodeURIComponent(continent)}`);
     }
 
-    // Open popup function
+    // Popup window logic
     function openPopup(url) {
       const width = 900;
       const height = 600;

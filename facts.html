@@ -3,92 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cultural Facts Explorer</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Impact', 'Arial Black', sans-serif;
-      background-color: #fff4f1;
-      color: #333;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      background-color: #fff4f1;
-      padding: 20px;
-      border-bottom: 2px solid #ffccbc;
-    }
-    .title {
-      font-size: 32px;
-      background: linear-gradient(to right, #ff4500, #ff7f50);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: bold;
-      margin: 0;
-    }
-    .content {
-      flex: 1;
-      display: flex;
-    }
-    .sidebar {
-      width: 250px;
-      background-color: #f8f8f8;
-      padding: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-    }
-    .sidebar h3 {
-      font-size: 20px;
-      color: #d9480f;
-      margin-bottom: 10px;
-    }
-    .sidebar a {
-      display: block;
-      font-size: 16px;
-      color: #d9480f;
-      text-decoration: none;
-      margin: 8px 0;
-      font-family: Arial, sans-serif;
-      cursor: pointer;
-    }
-    .sidebar a:hover, .sidebar a.active {
-      color: #ff7f50;
-      font-weight: bold;
-    }
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-      font-family: Arial, sans-serif;
-    }
-    .fact-title {
-      font-size: 28px;
-      color: #d9480f;
-      margin-bottom: 20px;
-    }
-    .fact-section {
-      margin-bottom: 30px;
-    }
-    .fact-section h2 {
-      color: #ff4500;
-      margin-bottom: 10px;
-    }
-    .fact-text {
-      font-size: 18px;
-      line-height: 1.5;
-      color: #444;
-      padding: 15px;
-      border-radius: 8px;
-      background-color: #fff9f7;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      border-left: 5px solid #d9480f;
-    }
-    .fact-text.false {
-      border-left-color: #999;
-      color: #a33;
-      font-style: italic;
-    }
-  </style>
+  <title>Fact Detail</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <div class="header">
@@ -98,84 +14,135 @@
   <div class="content">
     <div class="sidebar">
       <h3>Continents</h3>
-      <a href="#" class="active" data-continent="Europe">Europe</a>
-      <a href="#" data-continent="Africa">Africa</a>
-      <a href="#" data-continent="Asia">Asia</a>
-      <a href="#" data-continent="Middle East">Middle East</a>
-      <a href="#" data-continent="Oceania">Oceania</a>
-      <a href="#" data-continent="North America">North America</a>
-      <a href="#" data-continent="South America">South America</a>
+      <a href="fact.html?continent=Europe" data-continent="Europe">Europe</a>
+      <a href="fact.html?continent=Africa" data-continent="Africa">Africa</a>
+      <a href="fact.html?continent=Asia" data-continent="Asia">Asia</a>
+      <a href="fact.html?continent=Middle%20East" data-continent="Middle East">Middle East</a>
+      <a href="fact.html?continent=Oceania" data-continent="Oceania">Oceania</a>
+      <a href="fact.html?continent=North%20America" data-continent="North America">North America</a>
+      <a href="fact.html?continent=South%20America" data-continent="South America">South America</a>
+      <a class="back-link" href="index.html">← Back to Map</a>
     </div>
 
-    <div class="main" id="main-content">
-      <!-- Fact content will load here -->
+    <div class="main">
+      <div class="fact-header">
+        <h1 id="fact-title">Cultural Fact</h1>
+        <div class="rating" id="fact-rating">★★★★☆ (4.0)</div>
+      </div>
+
+      <img id="fact-image" src="images/fact1.jpg" alt="Cultural Image" class="fact-image"/>
+
+      <p id="fact-description">
+        This is a more detailed description of the cultural fact.
+      </p>
+
+      <hr/>
+
+      <div class="review-section">
+        <h2>Reviews & Ratings</h2>
+        <form id="comment-form">
+          <input type="text" id="username" placeholder="Your name" required />
+          <textarea id="commentText" placeholder="Write your comment..." required></textarea>
+
+          <div class="star-rating">
+            <label for="rating">Your Rating:</label>
+            <select id="rating" required>
+              <option value="">Rate</option>
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★☆</option>
+              <option value="3">★★★☆☆</option>
+              <option value="2">★★☆☆☆</option>
+              <option value="1">★☆☆☆☆</option>
+            </select>
+          </div>
+
+          <button type="submit">Submit Review</button>
+        </form>
+
+        <div id="comments-list" class="comments-list"></div>
+      </div>
     </div>
   </div>
 
   <script>
     const factsData = {
       "Europe": {
-        true: "French fries were invented in Belgium, not France.",
-        false: "French fries were invented in France."
+        title: "French Fries Origin",
+        image: "images/fact1.jpg",
+        description: "Despite the name, French fries are believed to have originated in Belgium. They became popular in France during WWI and were later brought to the U.S. by returning soldiers.",
+        rating: "★★★★☆ (4.2)"
       },
       "Africa": {
-        true: "In some African cultures, a single ostrich egg can feed up to 10 people.",
-        false: "In Africa, ostrich eggs are too small to feed anyone."
+        title: "Ostrich Eggs in Cuisine",
+        image: "images/fact2.jpg",
+        description: "In various African cultures, ostrich eggs are used in traditional meals. A single ostrich egg can weigh over 3 pounds and feed a family of 6–10 people.",
+        rating: "★★★☆☆ (3.7)"
       },
       "Asia": {
-        true: "Traditional Korean kimchi is fermented underground in clay pots.",
-        false: "Kimchi is traditionally made with raw fish only."
+        title: "Kimchi Fermentation",
+        image: "images/fact3.jpg",
+        description: "In Korea, kimchi has been traditionally fermented underground in large earthenware jars called 'onggi'. The process preserves vegetables and enhances flavor.",
+        rating: "★★★★★ (4.8)"
       },
       "Middle East": {
-        true: "Snow once fell in the Sahara Desert.",
-        false: "The Sahara Desert never experiences snow."
+        title: "Sahara Snow",
+        image: "images/fact4.jpg",
+        description: "Although rare, the Sahara Desert has experienced snowfall. One notable instance was in 2018 when parts of Algeria saw several inches of snow.",
+        rating: "★★★☆☆ (3.9)"
       },
       "Oceania": {
-        true: "New Zealand’s national animal is the kiwi — a bird, not a fruit.",
-        false: "The kiwi fruit is New Zealand’s national animal."
+        title: "Kiwi – The Bird, Not the Fruit",
+        image: "images/fact5.jpg",
+        description: "The kiwi is a flightless bird native to New Zealand and serves as a national symbol. It is nocturnal and lays one of the largest eggs in relation to its body size.",
+        rating: "★★★★☆ (4.4)"
       },
       "North America": {
-        true: "Canadians tap trees to make maple syrup.",
-        false: "Maple syrup is made from pine trees."
+        title: "Maple Syrup Culture",
+        image: "images/fact6.jpg",
+        description: "Maple syrup is a major product in Canada. It’s made by collecting sap from sugar maple trees and boiling it down to a syrupy consistency.",
+        rating: "★★★★★ (4.6)"
       },
       "South America": {
-        true: "In some Andean cities, llamas are part of daily life and walk the streets.",
-        false: "Llamas are only found in zoos in South America."
+        title: "Llamas in Andean Life",
+        image: "images/fact7.jpg",
+        description: "Llamas are domesticated animals commonly found in the Andes. They are used for transport, wool, and have strong cultural significance in Peru and Bolivia.",
+        rating: "★★★★☆ (4.1)"
       }
     };
 
-    const mainContent = document.getElementById('main-content');
-    const sidebarLinks = document.querySelectorAll('.sidebar a');
+    const params = new URLSearchParams(window.location.search);
+    const continent = params.get("continent") || "Europe";
 
-    function loadFacts(continent) {
-      const data = factsData[continent];
-      mainContent.innerHTML = `
-        <div class="fact-title">${continent}</div>
-        <div class="fact-section">
-          <h2>True Fact</h2>
-          <div class="fact-text">${data.true}</div>
-        </div>
-        <div class="fact-section">
-          <h2>False Fact</h2>
-          <div class="fact-text false">${data.false}</div>
-        </div>
+    const data = factsData[continent];
+
+    document.getElementById("fact-title").textContent = data.title;
+    document.getElementById("fact-image").src = data.image;
+    document.getElementById("fact-description").textContent = data.description;
+    document.getElementById("fact-rating").textContent = data.rating;
+
+    const form = document.getElementById('comment-form');
+    const commentsList = document.getElementById('comments-list');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const text = document.getElementById('commentText').value;
+      const rating = document.getElementById('rating').value;
+
+      const commentElement = document.createElement('div');
+      commentElement.className = 'comment';
+
+      commentElement.innerHTML = `
+        <strong>${username}</strong> (${rating}★)<br/>
+        <p>${text}</p>
+        <hr/>
       `;
-    }
 
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
+      commentsList.prepend(commentElement);
 
-        sidebarLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-
-        const continent = link.getAttribute('data-continent');
-        loadFacts(continent);
-      });
+      form.reset();
     });
-
-    // Load default
-    loadFacts('Europe');
   </script>
 </body>
 </html>

@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  background-color: #fff4f1;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #fff4f1;
+  padding: 20px;
+  border-bottom: 2px solid #ffccbc;
+}
+
+.title {
+  font-size: 32px;
+  background: linear-gradient(to right, #ff4500, #ff7f50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  font-size: 20px;
+  color: #d9480f;
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  display: block;
+  font-size: 16px;
+  color: #d9480f;
+  text-decoration: none;
+  margin: 8px 0;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  color: #ff7f50;
+  font-weight: bold;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+
+.fact-title {
+  font-size: 28px;
+  color: #d9480f;
+  margin-bottom: 20px;
+}
+
+.fact-section {
+  margin-bottom: 30px;
+}
+
+.fact-section h2 {
+  color: #ff4500;
+  margin-bottom: 10px;
+}
+
+.fact-text {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #444;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff9f7;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-left: 5px solid #d9480f;
+}
+
+.fact-text.false {
+  border-left-color: #999;
+  color: #a33;
+  font-style: italic;
+}
+
+.review-section {
+  margin-top: 40px;
+}
+
+.review-section h3 {
+  color: #d9480f;
+  margin-bottom: 10px;
+}
+
+#comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+}
+
+#comment-form input,
+#comment-form textarea,
+#comment-form select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#comment-form button {
+  background-color: #ff4500;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.comments-list {
+  margin-top: 20px;
+  max-width: 600px;
+}
+
+.comment {
+  background-color: #fff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.comment strong {
+  color: #d9480f;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

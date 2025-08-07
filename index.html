@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tap the Globe</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     body {
       margin: 0;
@@ -66,6 +63,7 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      width: 100%;
     }
 
     .continent-button:hover {
@@ -93,13 +91,13 @@
   <div class="container">
     <div class="sidebar">
       <h2>Continents</h2>
-      <button class="continent-button" onclick="flyToContinent('NA')">North America</button>
-      <button class="continent-button" onclick="flyToContinent('SA')">South America</button>
-      <button class="continent-button" onclick="flyToContinent('EU')">Europe</button>
-      <button class="continent-button" onclick="flyToContinent('AS')">Asia</button>
-      <button class="continent-button" onclick="flyToContinent('AN')">Antarctica</button>
-      <button class="continent-button" onclick="flyToContinent('AU')">Australia</button>
-      <button class="continent-button" onclick="flyToContinent('AF')">Africa</button>
+      <button class="continent-button" onclick="handleContinentClick('North America')">North America</button>
+      <button class="continent-button" onclick="handleContinentClick('South America')">South America</button>
+      <button class="continent-button" onclick="handleContinentClick('Europe')">Europe</button>
+      <button class="continent-button" onclick="handleContinentClick('Asia')">Asia</button>
+      <button class="continent-button" onclick="handleContinentClick('Antarctica')">Antarctica</button>
+      <button class="continent-button" onclick="handleContinentClick('Australia')">Australia</button>
+      <button class="continent-button" onclick="handleContinentClick('Africa')">Africa</button>
     </div>
 
     <div class="main">
@@ -112,25 +110,114 @@
     // Initialize the map
     const map = L.map('map').setView([20, 0], 2);
 
-    // Add the tile layer (the actual map tiles)
+    // Add the tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Continent fly-to function
-    function flyToContinent(code) {
-      const locations = {
-        NA: [40, -100],
-        SA: [-10, -55],
-        EU: [50, 10],
-        AS: [34, 100],
-        AF: [0, 20],
-        AU: [-25, 133],
-        AN: [-75, 0]
-      };
-      map.flyTo(locations[code], 3);
+    // Define locations for flyTo
+    const continentLocations = {
+      'North America': [40, -100],
+      'South America': [-10, -55],
+      'Europe': [50, 10],
+      'Asia': [34, 100],
+      'Africa': [0, 20],
+      'Australia': [-25, 133],
+      'Antarctica': [-75, 0]
+    };
+
+    // Handle continent button click
+    function handleContinentClick(continent) {
+      // Fly to the location
+      if (continentLocations[continent]) {
+        map.flyTo(continentLocations[continent], 3);
+      }
+
+      // Open popup window
+      openPopup(`window.html?continent=${encodeURIComponent(continent)}`);
     }
+
+    // Open popup function
+    function openPopup(url) {
+      const width = 900;
+      const height = 600;
+      const left = (screen.width / 2) - (width / 2);
+      const top = (screen.height / 2) - (height / 2);
+      window.open(
+        url,
+        'popupWindow',
+        `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes`
+      );
+    }
+
+    // Add country pins and facts
+    const countries = [
+      {
+        name: 'USA',
+        coords: [38.9, -77],
+        facts: ['The U.S. has 63 national parks.', 'Alaska has the most coastline.', 'Home of the Grand Canyon.', 'First moon landing in 1969.', 'Invented the internet.', 'Hollywood is the movie capital.', 'Has 50 states.', 'Home to the world’s largest economy.', 'Founded in 1776.', 'New York was the first capital.']
+      },
+      {
+        name: 'Canada',
+        coords: [45.4, -75.7],
+        facts: ['Second largest country.', 'Home of maple syrup.', 'Has over 2 million lakes.', 'Bilingual: English & French.', 'National animal is beaver.', 'Toronto is the biggest city.', 'Founded in 1867.', 'Niagara Falls is shared with USA.', 'Mounties are famous.', 'Hockey is the national winter sport.']
+      },
+      {
+        name: 'Brazil',
+        coords: [-15.8, -47.9],
+        facts: ['Largest country in South America.', 'Home to the Amazon rainforest.', 'Speaks Portuguese.', 'Hosted 2016 Olympics.', 'Famous for Carnival.', 'Christ the Redeemer is iconic.', 'Biodiversity hotspot.', 'Capital is Brasília.', 'Samba music originated here.', 'Has over 200 million people.']
+      },
+      {
+        name: 'Argentina',
+        coords: [-34.6, -58.4],
+        facts: ['Known for tango music.', 'Home of Lionel Messi.', 'Buenos Aires is the capital.', 'Andes mountains run along west.', 'Has glaciers in Patagonia.', 'Pampas produce beef.', 'Iguazu Falls is massive.', 'Spanish is the official language.', 'Gained independence in 1816.', 'Famous for wine.']
+      },
+      {
+        name: 'France',
+        coords: [48.8, 2.3],
+        facts: ['Paris is the “City of Light”.', 'Invented the metric system.', 'Eiffel Tower built in 1889.', 'Famous for art & fashion.', 'French Revolution began 1789.', 'Known for pastries.', 'Borders 6 countries.', 'Colonial empire once vast.', 'Has nuclear power.', 'World’s most visited country.']
+      },
+      {
+        name: 'Germany',
+        coords: [52.5, 13.4],
+        facts: ['Capital is Berlin.', 'Famous for beer & sausages.', 'Invented printing press.', 'Oktoberfest is celebrated yearly.', 'Reunified in 1990.', 'Autobahn has no speed limit.', 'Strongest EU economy.', 'Composer Beethoven was German.', 'Hosts many castles.', 'Part of both WWI & WWII.']
+      },
+      {
+        name: 'India',
+        coords: [28.6, 77.2],
+        facts: ['Second most populous country.', 'Taj Mahal is a wonder.', 'Home of yoga.', 'Birthplace of Buddhism.', 'Has 22 official languages.', 'Bollywood makes more films than Hollywood.', 'Independence in 1947.', 'Has the Himalayas.', 'Known for spices.', 'Ganges is a sacred river.']
+      },
+      {
+        name: 'Japan',
+        coords: [35.7, 139.7],
+        facts: ['Tokyo is the most populated city.', 'Invented sushi.', 'Mount Fuji is a symbol.', 'Anime is global export.', 'Samurai & ninja are historical icons.', 'Advanced in robotics.', 'Was isolated for centuries.', 'Shinkansen is bullet train.', 'Emperor is symbolic leader.', 'Hosted Olympics twice.']
+      },
+      {
+        name: 'South Africa',
+        coords: [-25.7, 28.2],
+        facts: ['Three capital cities.', 'Nelson Mandela led change.', 'Big Five safari animals live here.', '11 official languages.', 'Cape Town is scenic.', 'Gold & diamonds mined here.', 'Table Mountain is famous.', 'Apartheid ended in 1994.', 'Hosts Kruger National Park.', 'Wines are internationally known.']
+      },
+      {
+        name: 'Nigeria',
+        coords: [9.1, 7.5],
+        facts: ['Most populous African country.', 'Speaks over 500 languages.', 'Home to Nollywood films.', 'Capital is Abuja.', 'Oil-rich economy.', 'Colonized by British.', 'Independence in 1960.', 'Has diverse tribes.', 'Lagos is largest city.', 'Afrobeats is popular music.']
+      },
+      {
+        name: 'Australia',
+        coords: [-35.3, 149.1],
+        facts: ['Kangaroos outnumber people.', 'Sydney Opera House is iconic.', 'Great Barrier Reef is world’s largest.', 'Was a British colony.', 'Home to Aboriginal cultures.', 'Uluru is sacred.', '6 states and 2 territories.', 'Capital is Canberra.', 'Has unique wildlife.', 'Cricket is a national sport.']
+      },
+      {
+        name: 'Antarctica',
+        coords: [-82.8, 135],
+        facts: ['Coldest place on Earth.', 'No permanent population.', 'Covered in ice.', 'Has penguins.', 'Treaty bans military activity.', 'Research stations only.', 'Discovered in 1820.', 'No native plants.', 'Sun doesn’t set in summer.', 'Sun doesn’t rise in winter.']
+      }
+    ];
+
+    countries.forEach((country) => {
+      const popupContent = `<strong>${country.name}</strong><br><ul>${country.facts.map(fact => `<li>${fact}</li>`).join('')}</ul>`;
+      L.marker(country.coords).addTo(map).bindPopup(popupContent);
+    });
   </script>
 </body>
 </html>
-
