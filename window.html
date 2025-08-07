@@ -46,52 +46,52 @@
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const continent = params.get("continent") || "Europe";
+  const params = new URLSearchParams(window.location.search);
+  const continent = params.get("continent") || "Europe";
 
-    const factsData = {
-      "Europe": [
-        { id: 1, name: "French Fries Origin", imageUrl: "images/fact1.jpg" },
-      ],
-      "Africa": [
-        { id: 2, name: "Ostrich Eggs in Cuisine", imageUrl: "images/fact2.jpg" },
-        { id: 4, name: "Snow in the Sahara", imageUrl: "images/fact4.jpg" },
-      ],
-      "Asia": [
-        { id: 3, name: "Kimchi Fermentation", imageUrl: "images/fact3.jpg" },
-      ],
-      "Oceania": [
-        { id: 5, name: "Kiwi – The Bird", imageUrl: "images/fact5.jpg" },
-      ],
-      "North America": [
-        { id: 6, name: "Maple Syrup Culture", imageUrl: "images/fact6.jpg" },
-      ],
-      "South America": [
-        { id: 7, name: "Llamas in Andes", imageUrl: "images/fact7.jpg" },
-      ]
-    };
+  const factsData = {
+    "Europe": [
+      { id: 1, name: "French Fries Origin", imageUrl: "images/fact1.jpg" },
+    ],
+    "Africa": [
+      { id: 2, name: "Ostrich Eggs in Cuisine", imageUrl: "images/fact2.jpg" },
+      { id: 4, name: "Snow in the Sahara", imageUrl: "images/fact4.jpg" },
+    ],
+    "Asia": [
+      { id: 3, name: "Kimchi Fermentation", imageUrl: "images/fact3.jpg" },
+    ],
+    "Oceania": [
+      { id: 5, name: "Kiwi – The Bird", imageUrl: "images/fact5.jpg" },
+    ],
+    "North America": [
+      { id: 6, name: "Maple Syrup Culture", imageUrl: "images/fact6.jpg" },
+    ],
+    "South America": [
+      { id: 7, name: "Llamas in Andes", imageUrl: "images/fact7.jpg" },
+    ]
+  };
 
-    const container = document.getElementById("facts-container");
-    const facts = factsData[continent] || [];
+  const container = document.getElementById("facts-container");
+  const facts = factsData[continent] || [];
 
-    if (facts.length === 0) {
-      container.innerHTML = `<p>No facts found for ${continent}.</p>`;
-    } else {
-      facts.forEach(fact => {
-        const card = document.createElement("div");
-        card.className = "fact-card";
+  if (facts.length === 0) {
+    container.innerHTML = `<p>No facts found for ${continent}.</p>`;
+  } else {
+    facts.forEach(fact => {
+      const card = document.createElement("div");
+      card.className = "fact-card";
 
-        card.innerHTML = `
-          <img src="${fact.imageUrl}" alt="${fact.name}" class="fact-image" />
-          <h3>${fact.name}</h3>
-          <div class="fact-actions">
-            <a class="detail-link" href="facts.html?id=${fact.id}">🔍 Details</a>
-          </div>
-        `;
+      card.innerHTML = `
+        <img src="${fact.imageUrl}" alt="${fact.name}" class="fact-image" />
+        <h3>${fact.name}</h3>
+        <div class="fact-actions">
+          <a class="detail-link" href="facts.html?continent=${encodeURIComponent(continent)}">🔍 Details</a>
+        </div>
+      `;
 
-        container.appendChild(card);
-      });
-    }
-  </script>
+      container.appendChild(card);
+    });
+  }
+</script>
 </body>
 </html>
