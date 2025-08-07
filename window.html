@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Region Facts</title>
+<style>
+  body {
+    margin: 0; font-family: 'Impact', 'Arial Black', sans-serif; background: #fff4f1; color: #333;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  .header {
+    padding: 20px; border-bottom: 2px solid #ffccbc; background: #fff4f1;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .title {
+    font-size: 28px;
+    background: linear-gradient(to right, #ff4500, #ff7f50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    margin: 0;
+  }
+  .controls {
+    font-family: Arial, sans-serif;
+  }
+  .controls input[type="search"] {
+    padding: 6px 10px;
+    border: 1px solid #ffccbc;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+  .controls select {
+    padding: 6px 10px;
+    border: 1px solid #ffccbc;
+    border-radius: 6px;
+  }
+  main {
+    flex: 1;
+    padding: 20px 30px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 20px;
+  }
+  .card {
+    background: #fff9f7;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  }
+  .card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-title {
+    color: #d9480f;
+    font-size: 20px;
+    margin: 0 0 8px;
+    flex-shrink: 0;
+  }
+  .card-description {
+    color: #555;
+    font-size: 14px;
+    flex-grow: 1;
+  }
+  .card-rating {
+    margin-top: 10px;
+    color: #ffc107;
+    font-size: 18px;
+  }
+  a.back-link {
+    font-family: Arial, sans-serif;
+    color: #d9480f;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  a.back-link:hover {
+    color: #ff7f50;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="title" id="region-title">Facts for Region</div>
+    <div class="controls">
+      <input type="search" id="search-input" placeholder="Search facts..." />
+      <select id="sort-select">
+        <option value="rating">Sort by Rating</option>
+        <option value="newest">Sort by Newest</option>
+      </select>
+    </div>
+  </div>
+
+  <main>
+    <a href="index.html" class="back-link">← Back to Map</a>
+    <div class="cards" id="facts-cards">
+      <!-- Fact cards inserted here -->
+    </div>
+  </main>
+
+  <script>
+    // Demo facts data (would be loaded from server/database)
+    const allFacts = [
+      {id: 1, continent: "Europe", name: "Belgium invented French fries", imageUrl: "https://via.placeholder.com/400x200?text=French+Fries", description: "French fries were actually invented in Belgium.", rating: 4.5, date: "2023-06-01"},
+      {id: 2, continent: "Europe", name: "France invented French fries", imageUrl: "https://via.placeholder.com/400x200?text=French+Fries+Myth", description: "It’s a common myth that France invented French fries.", rating: 2.0, date: "2022-11-15"},
+      {id: 3, continent: "Asia", name: "Kimchi fermented underground", imageUrl: "https://via.placeholder.com/400x200?text=Kimchi", description: "Traditional Korean kimchi is fermented underground in clay pots.", rating: 4.8, date: "2023-04-10"},
+      {id: 4, continent: "Asia", name: "Kimchi made with raw fish", imageUrl: "https://via.placeholder.com/400x200?text=Kimchi+Myth", description: "False fact: Kimchi is made only with raw fish.", rating: 1.9, date: "2023-02-01"},
+      // add more demo facts for other continents...
+    ];
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    const continent = getQueryParam('continent') || 'Europe';
+    const regionTitle = document.getElementById('region-title');
+    const cardsContainer = document.getElementById('facts-cards');
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+
+    regionTitle.textContent = `Facts for ${continent}`;
+
+    // Filter and sort logic
+    function renderCards() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      let filteredFacts = allFacts.filter(fact => fact.continent === continent);
+
+      if(searchTerm) {
+        filteredFacts = filteredFacts.filter(fact => fact.name.toLowerCase().includes(searchTerm));
+      }
+
+      if(sortSelect.value === 'rating') {
+        filteredFacts.sort((a,b) => b.rating - a.rating);
+      } else if(sortSelect.value === 'newest') {
+        filteredFacts.sort((a,b) => new Date(b.date) - new Date(a.date));
+      }
+
+      cardsContainer.innerHTML = filteredFacts.map(fact => `
+        <a href="facts.html?id=${fact.id}" class="card" title="${fact.description}">
+          <img src="${fact.imageUrl}" alt="${fact.name}" />
+          <div class="card-content">
+            <h3 class="card-title">${fact.name}</h3>
+            <p class="card-description">${fact.description}</p>
+            <div class

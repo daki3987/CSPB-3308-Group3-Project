@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tap the Globe</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 20px;
+      background-color: #fff4f1;
+      color: #ff4500;
+    }
+
+    .title {
+      font-size: 28px;
+      color: #ff4500;
+      background: linear-gradient(to right, #ff4500, #ff7f50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .authors {
+      font-size: 14px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f8f8f8;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .continent-button {
+      display: block;
+      background-color: #ffe5d9;
+      color: #d9480f;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+      padding: 12px;
+      text-align: left;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .continent-button:hover {
+      background-color: #ffccbc;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Tap the Globe</div>
+    <div class="authors">By Chinmay, Dain, Patricia</div>
+  </div>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Continents</h2>
+      <button class="continent-button" onclick="handleContinentClick('North America')">North America</button>
+      <button class="continent-button" onclick="handleContinentClick('South America')">South America</button>
+      <button class="continent-button" onclick="handleContinentClick('Europe')">Europe</button>
+      <button class="continent-button" onclick="handleContinentClick('Asia')">Asia</button>
+      <button class="continent-button" onclick="handleContinentClick('Antarctica')">Antarctica</button>
+      <button class="continent-button" onclick="handleContinentClick('Australia')">Australia</button>
+      <button class="continent-button" onclick="handleContinentClick('Africa')">Africa</button>
+    </div>
+
+    <div class="main">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map
+    const map = L.map('map').setView([20, 0], 2);
+
+    // Add the tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Define locations for flyTo
+    const continentLocations = {
+      'North America': [40, -100],
+      'South America': [-10, -55],
+      'Europe': [50, 10],
+      'Asia': [34, 100],
+      'Africa': [0, 20],
+      'Australia': [-25, 133],
+      'Antarctica': [-75, 0]
+    };
+
+    // Handle continent button click
+    function handleContinentClick(continent) {
+      // Fly to the location
+      if (continentLocations[continent]) {
+        map.flyTo(continentLocations[continent], 3);
+      }
+
+      // Open popup window
+      openPopup(`window.html?continent=${encodeURIComponent(continent)}`);
+    }
+
+    // Open popup function
+    function openPopup(url) {
+      const width = 900;
+      const height = 600;
+      const left = (screen.width / 2) - (width / 2);
+      const top = (screen.height / 2) - (height / 2);
+      window.open(
+        url,
+        'popupWindow',
+        `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes`
+      );
+    }
+  </script>
+</body>
+</html>
