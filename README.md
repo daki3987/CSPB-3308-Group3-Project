@@ -3,7 +3,7 @@
 ##  Team Members
 
 =======
-**Group 3 Name: The Programmers**
+**Group 3 Name:Tap the Globe**
 
 - **Chinmay Somayajula** (s-chinmay) chinmay.somayajula@colorado.edu
 - **Dain Kim** (daki3987) dain.kim@colorado.edu
